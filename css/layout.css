@@ -52,7 +52,7 @@ header .banner {
    vertical-align: middle;
    margin: 0 auto;
    width: 85%;
-   padding-bottom: 30px;s
+   padding-bottom: 30px;
    text-align: center;
 }
 
@@ -297,11 +297,10 @@ ul#nav li.current a { color: #F06000; }
 }
 .bars li {
    position: relative;
-  	margin-bottom: 60px;
-  	background: #ccc;
-  	height: 42px;
-  	border-radius: 3px;
-}
+   list-style-type: circle;
+   font-size: 110%;
+   color: rgb(202, 45, 45);
+  }
 .bars li em {
 	font: 15px 'opensans-bold', sans-serif;
    color: #313131;
