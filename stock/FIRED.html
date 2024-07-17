@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .current-month {
+            background-color: #d4edda; /* Light green background */
+        }
+        .pinned {
+            background-color: #ffffcc; /* Light yellow background */
+        }
+    </style>
+</head>
+<body>
+    <table id="sipTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Month</th>
+                <th>SIP</th>
+                <th>Invested Amount</th>
+                <th>Corpus</th>
+                <th>FIRE Amount</th>
+                <th>Dividend</th>
+                <th>Eff SIP</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const initialAmount = 50000; // Initial SIP amount
+        const monthlyReturn = 1.5; // Monthly return rate
+        const annualIncrease = 5; // Annual increase in SIP amount
+        const numberOfMonths = 240; // Number of months (20 years)
+        const amountRequired = 24000000;
+        const currentDate = new Date(); // Get the current date
+
+        let pinnedSecondRow = false;
+
+        function addRowToTable(date, month, sip, investedAmount, corpus, fireAmount, dividend, effSip, isCurrentMonth, isPinnedRow) {
+            const table = document.getElementById('sipTable').getElementsByTagName('tbody')[0];
+            const newRow = isCurrentMonth ? table.insertRow(0) : (isPinnedRow ? table.insertRow(1) : table.insertRow());
+            if (isCurrentMonth) {
+                newRow.classList.add('current-month');
+            } else if (isPinnedRow) {
+                newRow.classList.add('pinned');
+            }
+            newRow.insertCell(0).textContent = date;
+            newRow.insertCell(1).textContent = month;
+            newRow.insertCell(2).textContent = sip;
+            newRow.insertCell(3).textContent = investedAmount;
+            newRow.insertCell(4).textContent = corpus;
+            newRow.insertCell(5).textContent = fireAmount;
+            newRow.insertCell(6).textContent = dividend;
+            newRow.insertCell(7).textContent = effSip;
+        }
+
+        const result = sipCalculator(initialAmount, monthlyReturn, annualIncrease, numberOfMonths, amountRequired);
+        console.log(`Total amount after ${numberOfMonths} months: ${result}`);
+
+        function sipCalculator(initialAmount, monthlyReturn, annualIncrease, numberOfMonths, amountRequired) {
+            let totalAmount = 0;
+            let investedAmount = 0;
+            let currentAmount = initialAmount;
+            let sipAmount = initialAmount;
+            let date = new Date(2023, 0, 1); // Starting date: 01-01-2023
+            let currentMonthAdded = false;
+
+            for (let month = 0; month <= numberOfMonths; month++) {
+                totalAmount += currentAmount;
+                investedAmount += sipAmount;
+                currentAmount += (currentAmount * monthlyReturn) / 100;
+                if (month !== 0 && month % 12 === 0) {
+                    currentAmount += (currentAmount * annualIncrease) / 100;
+                    sipAmount += (sipAmount * annualIncrease) / 100;
+                }
+                amountRequired += (amountRequired * 0.8) / 100;
+                let dividendAmount = totalAmount * 0.007 / 12;
+
+                // Format date to 'DD-MM-YYYY'
+                let formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+
+                // Check if the current iteration matches the current month and year
+                let isCurrentMonth = (date.getMonth() === currentDate.getMonth() && date.getFullYear() === currentDate.getFullYear());
+
+                // Check if Corpus > 0.5 * FIRE Amount and pin the row
+                let isPinnedRow = (totalAmount > 1 * amountRequired && !pinnedSecondRow);
+                if (isPinnedRow) {
+                    pinnedSecondRow = true;
+                }
+
+                addRowToTable(
+                    formattedDate,
+                    Math.floor(month + 1),
+                    Math.floor(sipAmount),
+                    Math.floor(investedAmount),
+                    Math.floor(totalAmount),
+                    Math.floor(amountRequired),
+                    Math.floor(dividendAmount),
+                    Math.floor(sipAmount - dividendAmount),
+                    isCurrentMonth,
+                    isPinnedRow
+                );
+
+                // Move to the next month
+                date.setMonth(date.getMonth() + 1);
+            }
+            return totalAmount.toFixed(2);
+        }
+    </script>
+</body>
+</html>
