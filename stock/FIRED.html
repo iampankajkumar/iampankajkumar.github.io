@@ -36,6 +36,7 @@
                 <th>SIP</th>
                 <th>Invested Amount</th>
                 <th>Corpus</th>
+                <th>Abs Returns</th>
                 <th>FIRE Amount</th>
                 <th>Dividend</th>
                 <th>Eff SIP</th>
@@ -55,7 +56,7 @@
 
         let pinnedSecondRow = false;
 
-        function addRowToTable(date, month, sip, investedAmount, corpus, fireAmount, dividend, effSip, isCurrentMonth, isPinnedRow) {
+        function addRowToTable(date, month, sip, investedAmount, corpus, absReturns, fireAmount, dividend, effSip, isCurrentMonth, isPinnedRow) {
             const table = document.getElementById('sipTable').getElementsByTagName('tbody')[0];
             const newRow = isCurrentMonth ? table.insertRow(0) : (isPinnedRow ? table.insertRow(1) : table.insertRow());
             if (isCurrentMonth) {
@@ -68,9 +69,10 @@
             newRow.insertCell(2).textContent = sip;
             newRow.insertCell(3).textContent = investedAmount;
             newRow.insertCell(4).textContent = corpus;
-            newRow.insertCell(5).textContent = fireAmount;
-            newRow.insertCell(6).textContent = dividend;
-            newRow.insertCell(7).textContent = effSip;
+            newRow.insertCell(5).textContent = absReturns;
+            newRow.insertCell(6).textContent = fireAmount;
+            newRow.insertCell(7).textContent = dividend;
+            newRow.insertCell(8).textContent = effSip;
         }
 
         const result = sipCalculator(initialAmount, monthlyReturn, annualIncrease, numberOfMonths, amountRequired);
