@@ -83,6 +83,7 @@
             let sipAmount = initialAmount;
             let date = new Date(2023, 0, 1); // Starting date: 01-01-2023
             let currentMonthAdded = false;
+            let absReturns = 0;
 
             for (let month = 0; month <= numberOfMonths; month++) {
                 totalAmount += currentAmount;
@@ -106,6 +107,8 @@
                 if (isPinnedRow) {
                     pinnedSecondRow = true;
                 }
+                
+                absReturns = Math.floor(totalAmount) - Math.floor(sipAmount);
 
                 addRowToTable(
                     formattedDate,
@@ -113,6 +116,7 @@
                     Math.floor(sipAmount),
                     Math.floor(investedAmount),
                     Math.floor(totalAmount),
+                    Math.floor(absReturns),
                     Math.floor(amountRequired),
                     Math.floor(dividendAmount),
                     Math.floor(sipAmount - dividendAmount),
