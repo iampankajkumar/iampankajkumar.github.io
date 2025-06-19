@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pankaj Kumar - Resume</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .page-break { page-break-before: always; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: white;
+            font-size: 11pt;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 15mm;
+            min-height: 297mm;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 15px;
+        }
+        
+        .header h1 {
+            font-size: 24pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .contact-info {
+            font-size: 10pt;
+            color: #555;
+            line-height: 1.3;
+        }
+        
+        .section {
+            margin-bottom: 18px;
+        }
+        
+        .section-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .summary ul, .highlights ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .summary li, .highlights li {
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .summary li:before, .highlights li:before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .skill-category {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .skill-list {
+            color: #555;
+        }
+        
+        .job {
+            margin-bottom: 16px;
+            border-left: 3px solid #3498db;
+            padding-left: 12px;
+        }
+        
+        .job-header {
+            margin-bottom: 8px;
+        }
+        
+        .job-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 2px;
+        }
+        
+        .company-project {
+            font-size: 10pt;
+            color: #666;
+            margin-bottom: 2px;
+        }
+        
+        .duration {
+            font-size: 10pt;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .responsibilities {
+            margin-top: 6px;
+        }
+        
+        .responsibilities ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .responsibilities li {
+            margin-bottom: 4px;
+            padding-left: 15px;
+            position: relative;
+            text-align: justify;
+        }
+        
+        .responsibilities li:before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .education-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+        }
+        
+        .degree {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .education-details {
+            color: #666;
+            font-size: 10pt;
+        }
+        
+        .personal-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        
+        .personal-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .personal-value {
+            color: #555;
+        }
+        
+        @media print {
+            body {
+                padding: 10mm;
+                font-size: 10pt;
+            }
+            .header h1 {
+                font-size: 20pt;
+            }
+            .section-title {
+                font-size: 12pt;
+            }
+            .job-title {
+                font-size: 11pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PANKAJ KUMAR</h1>
+        <div style="font-size: 12pt; color: #2c3e50; margin-bottom: 8px;">Lead Software Engineer (Java/J2EE/Jakarta EE)</div>
+        <div class="contact-info">
+            <strong>Email:</strong> pankajkumar.01869@gmail.com | <strong>Mobile:</strong> +91-8010215963<br>
+            <strong>Location:</strong> Noida, Uttar Pradesh | <strong>LinkedIn:</strong> www.linkedin.com/in/iampankajkumar
+        </div>
+    </div>
+
+    <div class="section summary">
+        <h2 class="section-title">Profile Summary</h2>
+        <ul>
+            <li>Accumulated over 8 years of comprehensive experience in Software Engineering, specializing in Finance, Data Analytics, and Human Capital Management (HCM) sectors</li>
+            <li>Currently excelling as Lead Software Engineer at Ultimate Kronos Group, overseeing critical projects that enhance application performance and user experience</li>
+            <li>Proficient in Java, Spring Boot, Microservices, Cloud (AWS), CI/CD, and container technologies with significant improvements in deployment efficiency</li>
+            <li>Spearheaded AI chatbot development and participated in UKG Agentathon, creating innovative solutions for employee wellness analytics</li>
+            <li>Currently developing ETF Scanner mobile application for Indian stock market using React Native, Spring Boot, and cloud technologies</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">Languages:</div>
+            <div class="skill-list">Java (Java 17), Python, SQL, JavaScript</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Frameworks:</div>
+            <div class="skill-list">Spring Framework, React Native</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Tools/Platforms:</div>
+            <div class="skill-list">Spring Boot, Jakarta EE</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Databases:</div>
+            <div class="skill-list">MongoDB, Elasticsearch, SQLite</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Cache/Messaging:</div>
+            <div class="skill-list">Redis, Kafka</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">DevOps/Cloud:</div>
+            <div class="skill-list">Jenkins, Docker, Kubernetes, AWS (EC2, S3, SQS, SNS, Lambda), Railway Cloud</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Tools:</div>
+            <div class="skill-list">Git, Maven, Gradle, Jira, Splunk, Datadog, Hibernate Envers, JUnit</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Architecture:</div>
+            <div class="skill-list">Microservices, Custom Frameworks, Mobile App Development</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Testing:</div>
+            <div class="skill-list">Manual, JUnit, API Testing</div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">Project Management:</div>
+            <div class="skill-list">Jira</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Work Experience</h2>
+        
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title">Lead Software Engineer | Ultimate Kronos Group, Noida</div>
+                <div class="company-project"><strong>Project:</strong> Human Capital Management</div>
+                <div class="duration">Oct 2022 – Present</div>
+            </div>
+            <div class="responsibilities">
+                <ul>
+                    <li>Developed <strong>Rule Analysis Tool</strong> to interpret and display meaningful data returned by Totalizer, simplifying debugging processes for end users</li>
+                    <li>Extended <strong>Leave Case Group Edits</strong> feature to support bulk operations, enhancing user experience and operational efficiency</li>
+                    <li>Designed <strong>custom event tracking framework</strong> leveraging <strong>Hibernate Envers</strong> for detailed user interaction and data change tracking</li>
+                    <li>Spearheaded <strong>AI chatbot development</strong> for internal automation, improving operational efficiency across multiple workflows</li>
+                    <li>Participated in <strong>UKG Agentathon</strong> and created <strong>BurnOutIndex agent</strong> that calculates employee burnout metrics and provides actionable recommendations to managers</li>
+                    <li>Provided <strong>technical mentorship</strong> to junior engineers, fostering skill development and promoting best practices within the team</li>
+                    <li>Streamlined development workflows and improved <strong>deployment efficiency</strong> using <strong>Jenkins and CI/CD</strong> methodologies</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title">Product Engineer | Digilytics Pvt. Ltd., Gurgaon</div>
+                <div class="company-project"><strong>Project:</strong> Data Analytics</div>
+                <div class="duration">Oct 2019 – Oct 2022</div>
+            </div>
+            <div class="responsibilities">
+                <ul>
+                    <li>Built <strong>Intelligent Data Capture (IDC) tool</strong> using <strong>AI and Computer Vision</strong> for efficient document and image processing</li>
+                    <li>Developed and optimized <strong>document classification module</strong>, ensuring accurate categorization based on model responses</li>
+                    <li>Led development of <strong>data extraction module</strong>, efficiently preparing and structuring data for frontend display</li>
+                    <li>Streamlined document and image processing workflows, reducing <strong>manual intervention</strong> and improving operational efficiency</li>
+                    <li>Collaborated with cross-disciplinary teams to ensure seamless integration and enhanced system performance</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title">Software Development Engineer | Power2SME Pvt. Ltd., Gurgaon</div>
+                <div class="company-project"><strong>Project:</strong> Loan Management Platform</div>
+                <div class="duration">Feb 2019 – Oct 2019</div>
+            </div>
+            <div class="responsibilities">
+                <ul>
+                    <li>Led requirements gathering and analysis phases, translating business needs into technical specifications</li>
+                    <li>Developed and optimized APIs for smooth system integration and efficient data exchange</li>
+                    <li>Enhanced loan workflow module, streamlining disbursement process for SMEs and reducing processing time</li>
+                    <li>Implemented robust role-based authentication module for secure access control and compliance</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title">Software Development Engineer | Skilrock Technologies Pvt. Ltd., Gurgaon</div>
+                <div class="company-project"><strong>Project:</strong> Player Management System</div>
+                <div class="duration">Dec 2016 – Feb 2019</div>
+            </div>
+            <div class="responsibilities">
+                <ul>
+                    <li>Developed backend modules for Player Management, CMS, bonus engine, and domain control systems</li>
+                    <li>Built various player reports, transactional activities, and administrative control features</li>
+                    <li>Implemented domain creation and privilege control mechanisms for secure operations</li>
+                    <li>Recognized as "Employee of the Month" in 2018 for outstanding performance and contributions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Personal Projects</h2>
+        
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title">ETF Scanner Mobile Application (Personal Hobby Project)</div>
+                <div class="company-project"><strong>Project:</strong> Indian Stock Market ETF Performance Tracker</div>
+                <div class="duration">Ongoing Personal Project</div>
+            </div>
+            <div class="responsibilities">
+                <ul>
+                    <li>Developing comprehensive ETF tracking mobile application for Indian stock market analysis</li>
+                    <li>Implementing <strong>React Native</strong> frontend for cross-platform mobile experience</li>
+                    <li>Building robust backend using <strong>Spring Boot (Java 17)</strong> with microservices architecture</li>
+                    <li>Utilizing <strong>SQLite</strong> for local data storage and <strong>Redis</strong> for caching performance optimization</li>
+                    <li>Deploying application infrastructure on <strong>Railway Cloud</strong> platform</li>
+                    <li>Integrating <strong>Python</strong> scripts for advanced data analytics and market trend analysis</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Education</h2>
+        <div class="education-item">
+            <div>
+                <div class="degree">B.Tech in Computer Science Engineering</div>
+                <div class="education-details">AKTU | 2017 | 70%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section highlights">
+        <h2 class="section-title">Core Competencies & Highlights</h2>
+        <ul>
+            <li><strong>Employee of the Month Recognition:</strong> Recognized at Skilrock Technologies in 2018 for outstanding performance and contributions</li>
+            <li><strong>Innovation in AI Solutions:</strong> Delivered AI chatbot solutions at Spark Tank tech face-off, showcasing creativity and technical expertise</li>
+            <li><strong>UKG Agentathon Participant:</strong> Developed BurnOutIndex Agent for employee wellness analytics and manager recommendations</li>
+            <li><strong>Technical Leadership:</strong> Application Development, Database Optimization, Microservices Architecture, and Team Mentorship</li>
+            <li><strong>Process Optimization:</strong> Achieved significant improvements in deployment efficiency using Jenkins and CI/CD methodologies</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Personal Details</h2>
+        <div class="personal-grid">
+            <div class="personal-label">Date of Birth:</div>
+            <div class="personal-value">1st Jan 1995</div>
+        </div>
+        <div class="personal-grid">
+            <div class="personal-label">Languages Known:</div>
+            <div class="personal-value">English, Hindi</div>
+        </div>
+        <div class="personal-grid">
+            <div class="personal-label">Location:</div>
+            <div class="personal-value">Noida, Uttar Pradesh</div>
+        </div>
+    </div>
+</body>
+</html>
