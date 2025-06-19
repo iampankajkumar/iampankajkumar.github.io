@@ -10,6 +10,76 @@
             .page-break { page-break-before: always; }
         }
         
+        .download-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .pdf-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .pdf-btn:hover {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .word-btn {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            color: white;
+        }
+        
+        .word-btn:hover {
+            background: linear-gradient(135deg, #1f5f8b, #2980b9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .download-btn svg {
+            flex-shrink: 0;
+        }
+        
+        @media print {
+            .download-buttons {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .download-buttons {
+                position: relative;
+                top: auto;
+                right: auto;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            
+            .download-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -203,6 +273,29 @@
     </style>
 </head>
 <body>
+    <!-- Download Buttons -->
+    <div class="download-buttons">
+        <button onclick="downloadPDF()" class="download-btn pdf-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download PDF
+        </button>
+        <button onclick="downloadWord()" class="download-btn word-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="18" x2="12" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="9" y1="15" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download Word
+        </button>
+    </div>
+
     <div class="header">
         <h1>PANKAJ KUMAR</h1>
         <div style="font-size: 12pt; color: #2c3e50; margin-bottom: 8px;">Lead Software Engineer (Java/J2EE/Jakarta EE)</div>
@@ -224,46 +317,66 @@
     </div>
 
     <div class="section">
-        <h2 class="section-title">Skills</h2>
+        <h2 class="section-title">Technical Skills</h2>
+        
         <div class="skills-grid">
-            <div class="skill-category">Languages:</div>
-            <div class="skill-list">Java (Java 17), Python, SQL, JavaScript</div>
+            <div class="skill-category">Programming Languages:</div>
+            <div class="skill-list">Java (Java 17), Python, JavaScript, SQL</div>
         </div>
+        
         <div class="skills-grid">
-            <div class="skill-category">Frameworks:</div>
-            <div class="skill-list">Spring Framework</div>
+            <div class="skill-category">Backend Frameworks:</div>
+            <div class="skill-list">Spring Framework, Spring Boot, Jakarta EE, J2EE</div>
         </div>
+        
         <div class="skills-grid">
-            <div class="skill-category">Tools/Platforms:</div>
-            <div class="skill-list">Spring Boot, Jakarta EE</div>
+            <div class="skill-category">Frontend/Mobile:</div>
+            <div class="skill-list">React Native, JavaScript</div>
         </div>
+        
         <div class="skills-grid">
             <div class="skill-category">Databases:</div>
-            <div class="skill-list">MongoDB, Elasticsearch, SQLite</div>
+            <div class="skill-list">MongoDB, Elasticsearch, SQLite, SQL Server</div>
         </div>
+        
         <div class="skills-grid">
-            <div class="skill-category">Cache/Messaging:</div>
-            <div class="skill-list">Redis, Kafka</div>
+            <div class="skill-category">Caching & Messaging:</div>
+            <div class="skill-list">Redis, Apache Kafka</div>
         </div>
+        
         <div class="skills-grid">
-            <div class="skill-category">DevOps/Cloud:</div>
-            <div class="skill-list">Jenkins, Docker, Kubernetes, AWS (EC2, S3, SQS, SNS, Lambda), Railway Cloud</div>
+            <div class="skill-category">Cloud & DevOps:</div>
+            <div class="skill-list">AWS (EC2, S3, SQS, SNS, Lambda), Railway Cloud, Jenkins, Docker, Kubernetes</div>
         </div>
+        
         <div class="skills-grid">
-            <div class="skill-category">Tools:</div>
-            <div class="skill-list">Git, Maven, Gradle, Jira, Splunk, Datadog, Hibernate Envers, JUnit</div>
+            <div class="skill-category">Development Tools:</div>
+            <div class="skill-list">Git, Maven, Gradle, Jira, Hibernate, Hibernate Envers</div>
         </div>
+        
         <div class="skills-grid">
-            <div class="skill-category">Architecture:</div>
-            <div class="skill-list">Microservices, Mobile App Development</div>
+            <div class="skill-category">Monitoring & Logging:</div>
+            <div class="skill-list">Splunk, Datadog</div>
         </div>
+        
         <div class="skills-grid">
             <div class="skill-category">Testing:</div>
-            <div class="skill-list">Manual, JUnit, API Testing</div>
+            <div class="skill-list">JUnit, Manual Testing, API Testing</div>
         </div>
+        
+        <div class="skills-grid">
+            <div class="skill-category">Architecture & Design:</div>
+            <div class="skill-list">Microservices Architecture, RESTful APIs, Mobile App Development</div>
+        </div>
+        
+        <div class="skills-grid">
+            <div class="skill-category">AI & Machine Learning:</div>
+            <div class="skill-list">Computer Vision, AI Chatbot Development, Data Analytics</div>
+        </div>
+        
         <div class="skills-grid">
             <div class="skill-category">Project Management:</div>
-            <div class="skill-list">Jira</div>
+            <div class="skill-list">Agile, Scrum, Jira, CI/CD</div>
         </div>
     </div>
 
@@ -341,7 +454,6 @@
 
     <div class="section">
         <h2 class="section-title">Personal Projects</h2>
-        
         <div class="job">
             <div class="job-header">
                 <div class="job-title">ETF Scanner Mobile Application (Personal Hobby Project)</div>
@@ -398,4 +510,51 @@
         </div>
     </div>
 </body>
+
+<script>
+    function downloadPDF() {
+        // Hide download buttons before printing
+        const downloadButtons = document.querySelector('.download-buttons');
+        downloadButtons.style.display = 'none';
+        
+        // Trigger print dialog
+        window.print();
+        
+        // Show download buttons again after a delay
+        setTimeout(() => {
+            downloadButtons.style.display = 'flex';
+        }, 1000);
+    }
+    
+    function downloadWord() {
+        // Create a copy of the document content without download buttons
+        const originalContent = document.body.innerHTML;
+        const downloadButtons = document.querySelector('.download-buttons');
+        downloadButtons.style.display = 'none';
+        
+        // Get the content
+        const content = document.documentElement.outerHTML;
+        
+        // Show download buttons again
+        downloadButtons.style.display = 'flex';
+        
+        // Create blob and download
+        const blob = new Blob([content], {
+            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        });
+        
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Pankaj_Kumar_Resume.doc';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // Fallback: Show instructions
+        alert('To save as Word document:\n1. Right-click on the page\n2. Select "Save as..."\n3. Choose "Web Page, Complete" format\n4. Rename the file with .doc extension');
+    }
+</script>
+
 </html>
