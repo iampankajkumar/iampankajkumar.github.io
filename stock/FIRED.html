@@ -5,27 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP Calculator</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .current-month {
-            background-color: #d4edda; /* Light green background */
-        }
-        .pinned {
-            background-color: #ffffcc; /* Light yellow background */
-        }
-    </style>
+    body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #222;
+        color: #e0e0e0;
+    }
+    table, th, td {
+        border: 1px solid #444;
+    }
+    th, td {
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #333;
+        color: #ffd700;
+    }
+    .current-month {
+        background-color: #234c2e; /* Dark green background */
+        color: #e0ffe0;
+    }
+    .pinned {
+        background-color: #4b430f; /* Dark yellow background */
+        color: #fffbe0;
+    }
+    /* Optional: Add hover effect for rows */
+    tbody tr:hover {
+        background-color: #2a2a2a;
+    }
+</style>
 </head>
 <body>
     <table id="sipTable">
