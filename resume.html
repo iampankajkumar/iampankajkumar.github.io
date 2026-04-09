@@ -44,25 +44,12 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
-        .word-btn {
-            background: linear-gradient(135deg, #2980b9, #3498db);
-            color: white;
-        }
-        
-        .word-btn:hover {
-            background: linear-gradient(135deg, #1f5f8b, #2980b9);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        
         .download-btn svg {
             flex-shrink: 0;
         }
         
         @media print {
-            .download-buttons {
-                display: none;
-            }
+            .download-buttons { display: none; }
         }
         
         @media (max-width: 768px) {
@@ -73,18 +60,13 @@
                 justify-content: center;
                 margin-bottom: 20px;
             }
-            
             .download-btn {
                 padding: 8px 12px;
                 font-size: 12px;
             }
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -119,9 +101,7 @@
             line-height: 1.3;
         }
         
-        .section {
-            margin-bottom: 18px;
-        }
+        .section { margin-bottom: 18px; }
         
         .section-title {
             font-size: 14pt;
@@ -160,14 +140,8 @@
             margin-bottom: 8px;
         }
         
-        .skill-category {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .skill-list {
-            color: #555;
-        }
+        .skill-category { font-weight: bold; color: #2c3e50; }
+        .skill-list { color: #555; }
         
         .job {
             margin-bottom: 16px;
@@ -175,9 +149,7 @@
             padding-left: 12px;
         }
         
-        .job-header {
-            margin-bottom: 8px;
-        }
+        .job-header { margin-bottom: 8px; }
         
         .job-title {
             font-size: 12pt;
@@ -198,9 +170,7 @@
             font-style: italic;
         }
         
-        .responsibilities {
-            margin-top: 6px;
-        }
+        .responsibilities { margin-top: 6px; }
         
         .responsibilities ul {
             list-style: none;
@@ -229,15 +199,8 @@
             padding: 6px 0;
         }
         
-        .degree {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .education-details {
-            color: #666;
-            font-size: 10pt;
-        }
+        .degree { font-weight: bold; color: #2c3e50; }
+        .education-details { color: #666; font-size: 10pt; }
         
         .personal-grid {
             display: grid;
@@ -246,34 +209,18 @@
             margin-bottom: 6px;
         }
         
-        .personal-label {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .personal-value {
-            color: #555;
-        }
+        .personal-label { font-weight: bold; color: #2c3e50; }
+        .personal-value { color: #555; }
         
         @media print {
-            body {
-                padding: 10mm;
-                font-size: 10pt;
-            }
-            .header h1 {
-                font-size: 20pt;
-            }
-            .section-title {
-                font-size: 12pt;
-            }
-            .job-title {
-                font-size: 11pt;
-            }
+            body { padding: 10mm; font-size: 10pt; }
+            .header h1 { font-size: 20pt; }
+            .section-title { font-size: 12pt; }
+            .job-title { font-size: 11pt; }
         }
     </style>
 </head>
 <body>
-    <!-- Download Buttons -->
     <div class="download-buttons">
         <button onclick="downloadPDF()" class="download-btn pdf-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -281,7 +228,6 @@
                 <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             Download PDF
         </button>
@@ -299,11 +245,15 @@
     <div class="section summary">
         <h2 class="section-title">Profile Summary</h2>
         <ul>
-            <li>Accumulated over 8 years of experience in Software Engineering, specializing in Finance, Data Analytics, and Human Capital Management (HCM) sectors.</li>
-            <li>Currently working as Lead Software Engineer at Ultimate Kronos Group, enhancing application performance and user experience.</li>
-            <li>Proficient in Java, Spring Boot, Microservices, Cloud (AWS), CI/CD, and container technologies.</li>
-            <li>Participated in UKG Agentathon, creating innovative solutions for employee wellness analytics.</li>
-            <li>Currently developing ETF Scanner mobile application for Indian stock market using React Native, Spring Boot, and Railway Cloud.</li>
+            <li>Over 8 years of experience in Software Engineering across Finance, Data Analytics, and Human Capital Management (HCM) domains.</li>
+            <li>Currently working as Lead Software Engineer at Ultimate Kronos Group, building and improving large-scale HCM applications used by enterprises globally.</li>
+            <li>Strong in Java, Spring Boot, Microservices, AWS Cloud, CI/CD, and container technologies like Docker and Kubernetes.</li>
+            <li>Built a <strong>Jenkins Wrapper Tool</strong> to simplify triggering of common CI/CD jobs, reducing manual overhead for the team with just one click.</li>
+            <li>Fine-tuned <strong>Claude CLI</strong> to generate code that matches existing codebase patterns, cutting feature delivery time from weeks to days.</li>
+            <li>Reduced tenant provisioning errors from thousands per day to under 100 by building dedicated Jenkins jobs and integrating with the TPA tool.</li>
+            <li>Strengthened application security by implementing multiple <strong>XSS security rules</strong> to address penetration test findings and block phishing attempts.</li>
+            <li>Participated in UKG Agentathon and developed the <strong>BurnOutIndex Agent</strong> for employee wellness analytics.</li>
+            <li>Currently building an <strong>ETF Scanner</strong> mobile app for the Indian stock market using React Native, Spring Boot, and Railway Cloud.</li>
         </ul>
     </div>
 
@@ -314,52 +264,42 @@
             <div class="skill-category">Programming Languages:</div>
             <div class="skill-list">Java 8, Java 17</div>
         </div>
-        
         <div class="skills-grid">
             <div class="skill-category">Backend Frameworks and Tools:</div>
             <div class="skill-list">Spring Framework, Spring Boot, Jakarta EE, J2EE</div>
         </div>
-        
         <div class="skills-grid">
             <div class="skill-category">Frontend/Mobile:</div>
             <div class="skill-list">React Native, JavaScript</div>
         </div>
-        
         <div class="skills-grid">
             <div class="skill-category">Databases:</div>
             <div class="skill-list">MongoDB, Elasticsearch, SQLite, SQL Server</div>
         </div>
-        
         <div class="skills-grid">
-            <div class="skill-category">Caching & Messaging:</div>
+            <div class="skill-category">Caching &amp; Messaging:</div>
             <div class="skill-list">Redis, Apache Kafka</div>
         </div>
-        
         <div class="skills-grid">
-            <div class="skill-category">Cloud & DevOps:</div>
+            <div class="skill-category">Cloud &amp; DevOps:</div>
             <div class="skill-list">AWS (EC2, S3, SQS, SNS, Lambda), Railway Cloud, Jenkins, Docker, Kubernetes</div>
         </div>
-        
         <div class="skills-grid">
             <div class="skill-category">Development Tools:</div>
             <div class="skill-list">Git, Maven, Gradle, Jira</div>
         </div>
-        
         <div class="skills-grid">
-            <div class="skill-category">Monitoring & Logging:</div>
+            <div class="skill-category">Monitoring &amp; Logging:</div>
             <div class="skill-list">Splunk, Datadog</div>
         </div>
-        
         <div class="skills-grid">
             <div class="skill-category">Testing:</div>
             <div class="skill-list">JUnit, Manual Testing, API Testing</div>
         </div>
-        
         <div class="skills-grid">
-            <div class="skill-category">Architecture & Design:</div>
+            <div class="skill-category">Architecture &amp; Design:</div>
             <div class="skill-list">Microservices Architecture, RESTful APIs</div>
         </div>
-        
         <div class="skills-grid">
             <div class="skill-category">Project Management:</div>
             <div class="skill-list">Agile, Scrum, Jira, CI/CD</div>
@@ -377,12 +317,14 @@
             </div>
             <div class="responsibilities">
                 <ul>
-                    <li>Developed <strong>Rule Analysis Tool</strong> to interpret and display meaningful data returned by Totalizer, simplifying debugging processes for end users</li>
-                    <li>Extended <strong>Leave Case Group Edits</strong> feature to support bulk operations, enhancing user experience and operational efficiency</li>
-                    <li>Designed <strong>custom event tracking framework</strong> leveraging <strong>Hibernate Envers</strong> for detailed user interaction and data change tracking</li>
-                    <li>Lead <strong>AI chatbot development</strong> for internal automation, improving operational efficiency across multiple workflows</li>
-                    <li>Participated in <strong>UKG Agentathon</strong> and created <strong>BurnOutIndex agent</strong> that calculates employee burnout metrics and provides actionable recommendations to managers</li>
-                    <li>Provided <strong>technical mentorship</strong> to junior engineers, fostering skill development and promoting best practices within the team</li>
+                    <li>Designed <strong>custom event tracking framework</strong> using <strong>Hibernate Envers</strong> for detailed user interaction and data change tracking</li>
+                    <li>Led <strong>AI chatbot development</strong> for internal automation, improving operational efficiency across multiple workflows</li>
+                    <li>Participated in <strong>UKG Agentathon</strong> and built <strong>BurnOutIndex Agent</strong> that calculates employee burnout metrics and gives actionable recommendations to managers</li>
+                    <li>Built <strong>Jenkins Wrapper Tool</strong> to allow triggering of frequently used CI/CD jobs with a single click, reducing manual overhead and saving significant team time</li>
+                    <li>Fine-tuned <strong>Claude CLI</strong> to produce code that closely matches existing codebase style and patterns, which reduced end-to-end feature delivery time from weeks to days</li>
+                    <li>Enhanced <strong>tenant provisioning tools</strong> by creating multiple Jenkins jobs and integrating with TPA tool, which brought down intermittent provisioning errors from thousands per day to under 100</li>
+                    <li>Fixed multiple <strong>penetration test (Pen Test) findings</strong> by implementing new XSS security rules to block phishing and injection attacks, improving overall application security posture</li>
+                    <li>Provided <strong>technical mentorship</strong> to junior engineers, promoting best practices and supporting skill development within the team</li>
                 </ul>
             </div>
         </div>
@@ -395,10 +337,11 @@
             </div>
             <div class="responsibilities">
                 <ul>
-                    <li>Developed and optimized <strong>document classification module</strong>, ensuring accurate categorization based on model responses</li>
+                    <li>Developed and optimized <strong>document classification module</strong>, ensuring accurate categorization based on ML model responses</li>
                     <li>Led development of <strong>data extraction module</strong>, efficiently preparing and structuring data for frontend display</li>
-                    <li>Streamlined document and image processing workflows, reducing <strong>manual intervention</strong> and improving operational efficiency</li>
-                    <li>Collaborated with cross-disciplinary teams to ensure seamless integration and enhanced system performance</li>
+                    <li>Streamlined document and image processing workflows, reducing manual intervention and improving operational efficiency</li>
+                    <li>Built and published <strong>digi-commons</strong> — a shared Java library that consolidated common logic previously scattered across multiple places — to GitHub Packages, reducing developer overhead and making the codebase easier to maintain</li>
+                    <li>Collaborated with cross-functional teams to ensure smooth integration and better system performance</li>
                 </ul>
             </div>
         </div>
@@ -411,10 +354,10 @@
             </div>
             <div class="responsibilities">
                 <ul>
-                    <li>Led requirements gathering and analysis phases, translating business needs into technical specifications</li>
+                    <li>Led requirements gathering and analysis, translating business needs into technical specifications</li>
                     <li>Developed and optimized APIs for smooth system integration and efficient data exchange</li>
-                    <li>Enhanced loan workflow module, streamlining disbursement process for SMEs and reducing processing time</li>
-                    <li>Implemented robust role-based authentication module for secure access control and compliance</li>
+                    <li>Enhanced loan workflow module, streamlining the disbursement process for SMEs and reducing processing time</li>
+                    <li>Implemented role-based authentication module for secure access control and compliance</li>
                 </ul>
             </div>
         </div>
@@ -428,9 +371,9 @@
             <div class="responsibilities">
                 <ul>
                     <li>Developed backend modules for Player Management, CMS, bonus engine, and domain control systems</li>
-                    <li>Built various player reports, transactional activities, and administrative control features</li>
+                    <li>Built player reports, transactional activity features, and administrative control panels</li>
                     <li>Implemented domain creation and privilege control mechanisms for secure operations</li>
-                    <li>Recognized as "Employee of the Month" in 2018 for outstanding performance and contributions</li>
+                    <li>Recognized as <strong>"Employee of the Month"</strong> in 2018 for outstanding performance and contributions</li>
                 </ul>
             </div>
         </div>
@@ -446,12 +389,13 @@
             </div>
             <div class="responsibilities">
                 <ul>
-                    <li>Developing comprehensive ETF tracking mobile application for Indian stock market analysis</li>
-                    <li>Implementing <strong>React Native</strong> frontend for cross-platform mobile experience</li>
-                    <li>Building robust backend using <strong>Spring Boot (Java 17)</strong> with microservices architecture</li>
-                    <li>Utilizing <strong>SQLite</strong> for local data storage and <strong>Redis</strong> for caching performance optimization</li>
-                    <li>Deploying application infrastructure on <strong>Railway Cloud</strong> platform</li>
-                    <li>Integrating <strong>Python</strong> scripts for colllecting financial and historical data from multiple sources</li>
+                    <li>Building a comprehensive ETF tracking mobile app for Indian stock market analysis</li>
+                    <li>Using <strong>React Native</strong> for cross-platform mobile frontend</li>
+                    <li>Backend built with <strong>Spring Boot (Java 17)</strong> following microservices architecture</li>
+                    <li>Using <strong>SQLite</strong> for local data storage and <strong>Redis</strong> for caching and performance</li>
+                    <li>Deployed on <strong>Railway Cloud</strong> platform</li>
+                    <li>Integrated <strong>Python</strong> scripts for collecting financial and historical data from multiple sources</li>
+                    <li>Using <strong>GitHub Actions</strong> to schedule and automate Python data collection scripts, removing the need for any manual runs</li>
                 </ul>
             </div>
         </div>
@@ -468,13 +412,14 @@
     </div>
 
     <div class="section highlights">
-        <h2 class="section-title">Core Competencies & Highlights</h2>
+        <h2 class="section-title">Core Competencies &amp; Highlights</h2>
         <ul>
-            <li><strong>Employee of the Month Recognition:</strong> Recognized at Skilrock Technologies in 2018 for outstanding performance and contributions</li>
-            <li><strong>Innovation in AI Solutions:</strong> Delivered AI chatbot solutions at Spark Tank tech face-off, showcasing creativity and technical expertise</li>
+            <li><strong>Employee of the Month Recognition:</strong> Recognised at Skilrock Technologies in 2018 for outstanding performance and contributions</li>
+            <li><strong>AI-Powered Delivery:</strong> Fine-tuned Claude CLI to match codebase patterns, reducing feature delivery time from weeks to days</li>
+            <li><strong>DevOps Tooling:</strong> Built Jenkins Wrapper Tool to simplify common CI/CD job execution with single-click access</li>
+            <li><strong>Security Hardening:</strong> Resolved multiple Pen Test findings by implementing XSS security rules to block phishing and injection attacks</li>
             <li><strong>UKG Agentathon Participant:</strong> Developed BurnOutIndex Agent for employee wellness analytics and manager recommendations</li>
-            <li><strong>Technical Leadership:</strong> Application Development, Database Optimization, Microservices Architecture, and Team Mentorship</li>
-            <li><strong>Process Optimization:</strong> Achieved significant improvements in deployment efficiency using Jenkins and CI/CD methodologies</li>
+            <li><strong>Technical Leadership:</strong> Application Development, Database Optimisation, Microservices Architecture, and Team Mentorship</li>
         </ul>
     </div>
 
@@ -497,48 +442,10 @@
 
 <script>
     function downloadPDF() {
-        // Hide download buttons before printing
         const downloadButtons = document.querySelector('.download-buttons');
         downloadButtons.style.display = 'none';
-        
-        // Trigger print dialog
         window.print();
-        
-        // Show download buttons again after a delay
-        setTimeout(() => {
-            downloadButtons.style.display = 'flex';
-        }, 1000);
-    }
-    
-    function downloadWord() {
-        // Create a copy of the document content without download buttons
-        const originalContent = document.body.innerHTML;
-        const downloadButtons = document.querySelector('.download-buttons');
-        downloadButtons.style.display = 'none';
-        
-        // Get the content
-        const content = document.documentElement.outerHTML;
-        
-        // Show download buttons again
-        downloadButtons.style.display = 'flex';
-        
-        // Create blob and download
-        const blob = new Blob([content], {
-            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        });
-        
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Pankaj_Kumar_Resume.doc';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        // Fallback: Show instructions
-        alert('To save as Word document:\n1. Right-click on the page\n2. Select "Save as..."\n3. Choose "Web Page, Complete" format\n4. Rename the file with .doc extension');
+        setTimeout(() => { downloadButtons.style.display = 'flex'; }, 1000);
     }
 </script>
-
 </html>
