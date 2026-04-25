@@ -9,7 +9,6 @@
             body { margin: 0; }
             .page-break { page-break-before: always; }
         }
-        
         .download-buttons {
             position: fixed;
             top: 20px;
@@ -18,7 +17,6 @@
             gap: 10px;
             z-index: 1000;
         }
-        
         .download-btn {
             display: flex;
             align-items: center;
@@ -32,26 +30,17 @@
             transition: all 0.3s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
         .pdf-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
         }
-        
         .pdf-btn:hover {
             background: linear-gradient(135deg, #c0392b, #a93226);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        
-        .download-btn svg {
-            flex-shrink: 0;
-        }
-        
-        @media print {
-            .download-buttons { display: none; }
-        }
-        
+        .download-btn svg { flex-shrink: 0; }
+        @media print { .download-buttons { display: none; } }
         @media (max-width: 768px) {
             .download-buttons {
                 position: relative;
@@ -60,14 +49,9 @@
                 justify-content: center;
                 margin-bottom: 20px;
             }
-            .download-btn {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
+            .download-btn { padding: 8px 12px; font-size: 12px; }
         }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.4;
@@ -79,14 +63,12 @@
             padding: 15mm;
             min-height: 297mm;
         }
-        
         .header {
             text-align: center;
             margin-bottom: 20px;
             border-bottom: 2px solid #2c3e50;
             padding-bottom: 15px;
         }
-        
         .header h1 {
             font-size: 24pt;
             font-weight: bold;
@@ -94,15 +76,12 @@
             margin-bottom: 8px;
             letter-spacing: 1px;
         }
-        
         .contact-info {
             font-size: 10pt;
             color: #555;
             line-height: 1.3;
         }
-        
         .section { margin-bottom: 18px; }
-        
         .section-title {
             font-size: 14pt;
             font-weight: bold;
@@ -113,18 +92,15 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
         .summary ul, .highlights ul {
             list-style: none;
             padding-left: 0;
         }
-        
         .summary li, .highlights li {
             margin-bottom: 5px;
             padding-left: 15px;
             position: relative;
         }
-        
         .summary li:before, .highlights li:before {
             content: "•";
             color: #3498db;
@@ -132,58 +108,47 @@
             position: absolute;
             left: 0;
         }
-        
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr 3fr;
             gap: 10px;
             margin-bottom: 8px;
         }
-        
         .skill-category { font-weight: bold; color: #2c3e50; }
         .skill-list { color: #555; }
-        
         .job {
             margin-bottom: 16px;
             border-left: 3px solid #3498db;
             padding-left: 12px;
         }
-        
         .job-header { margin-bottom: 8px; }
-        
         .job-title {
             font-size: 12pt;
             font-weight: bold;
             color: #2c3e50;
             margin-bottom: 2px;
         }
-        
         .company-project {
             font-size: 10pt;
             color: #666;
             margin-bottom: 2px;
         }
-        
         .duration {
             font-size: 10pt;
             color: #888;
             font-style: italic;
         }
-        
         .responsibilities { margin-top: 6px; }
-        
         .responsibilities ul {
             list-style: none;
             padding-left: 0;
         }
-        
         .responsibilities li {
             margin-bottom: 4px;
             padding-left: 15px;
             position: relative;
             text-align: justify;
         }
-        
         .responsibilities li:before {
             content: "•";
             color: #3498db;
@@ -191,27 +156,22 @@
             position: absolute;
             left: 0;
         }
-        
         .education-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 6px 0;
         }
-        
         .degree { font-weight: bold; color: #2c3e50; }
         .education-details { color: #666; font-size: 10pt; }
-        
         .personal-grid {
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 8px;
             margin-bottom: 6px;
         }
-        
         .personal-label { font-weight: bold; color: #2c3e50; }
         .personal-value { color: #555; }
-        
         @media print {
             body { padding: 10mm; font-size: 10pt; }
             .header h1 { font-size: 20pt; }
@@ -238,23 +198,20 @@
         <div style="font-size: 12pt; color: #2c3e50; margin-bottom: 8px;">Software Engineer III (Java/J2EE/Jakarta EE)</div>
         <div class="contact-info">
             <strong>Email:</strong> pankajkumar.01869@gmail.com | <strong>Mobile:</strong> +91-8010215963<br>
-            <strong>Location:</strong> Noida, Uttar Pradesh | <strong>LinkedIn:</strong> www.linkedin.com/in/iampankajkumar
+            <strong>Location:</strong> Noida, Uttar Pradesh | <strong>LinkedIn:</strong> linkedin.com/in/iampankajkumar
         </div>
     </div>
 
     <div class="section summary">
         <h2 class="section-title">Profile Summary</h2>
         <ul>
-            <li>Software Engineer III with <strong>9+ years of experience</strong> building enterprise-grade backend systems across <strong>HCM, Data Analytics, Finance, and Gaming</strong> domains, currently at UKG, Noida. Strong in Java, Spring Boot, Microservices, AWS, Docker, and Kubernetes.</li>
-            <li>Delivered measurable impact on productivity and reliability — built Jenkins Wrapper Tool for one-click CI/CD execution, fine-tuned Claude CLI to cut delivery from weeks to days, reduced tenant provisioning errors from thousands to under 100 per day, and hardened application security by resolving Pen Test findings with XSS rules.</li>
-            <li>Hands-on with <strong>AI and automation</strong> — led internal AI chatbot, built BurnOutIndex Agent at UKG Agentathon, and actively uses <strong>OpenAI, Claude CLI, and GitHub Actions</strong> to automate tasks and build productivity tools for the UKG developer community.</li>
-            <li>Self-driven beyond work — building an <strong>ETF Scanner</strong> mobile app for the Indian stock market using React Native, Spring Boot, Railway Cloud, and GitHub Actions for automated data pipelines.</li>
+            <li>Software Engineer III with <strong>9+ years of experience</strong> building enterprise-grade backend systems across <strong>HCM, Data Analytics, Finance, and Gaming</strong> domains — currently at UKG, Noida. Core expertise in Java, Spring Boot, Microservices, AWS, Docker, and Kubernetes.</li>
+            <li>Proven track record of measurable impact: reduced tenant provisioning errors from <strong>thousands to under 100/day</strong>, improved API performance by <strong>90%</strong>, cut feature delivery from weeks to days using <strong>Claude CLI</strong>, and built internal AI tools including a <strong>BurnOutIndex Agent</strong> at UKG Agentathon. Beyond work, building an <strong>ETF Scanner</strong> mobile app for the Indian stock market.</li>
         </ul>
     </div>
 
     <div class="section">
         <h2 class="section-title">Technical Skills</h2>
-        
         <div class="skills-grid">
             <div class="skill-category">Programming Languages:</div>
             <div class="skill-list">Java 8, Java 17</div>
@@ -288,10 +245,6 @@
             <div class="skill-list">Splunk, Datadog, PagerDuty</div>
         </div>
         <div class="skills-grid">
-            <div class="skill-category">Testing:</div>
-            <div class="skill-list">JUnit, Manual Testing, API Testing</div>
-        </div>
-        <div class="skills-grid">
             <div class="skill-category">Architecture &amp; Design:</div>
             <div class="skill-list">Microservices Architecture, RESTful APIs</div>
         </div>
@@ -307,7 +260,7 @@
 
     <div class="section">
         <h2 class="section-title">Work Experience</h2>
-        
+
         <div class="job">
             <div class="job-header">
                 <div class="job-title">Software Engineer III | Ultimate Kronos Group, Noida</div>
