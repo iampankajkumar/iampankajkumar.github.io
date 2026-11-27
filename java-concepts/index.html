@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backend Concepts, Animated</title>
+<style>
+:root{--bg:#f6f7f9;--card:#ffffff;--ink:#1d2330;--mute:#6b7280;--line:#e5e7eb;--a:#4f46e5;--g:#16a34a;--r:#dc2626;--y:#ca8a04;--b:#2563eb;--p:#9333ea;--t:#0d9488;--m:#64748b;--o:#ea580c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1218;--card:#171c26;--ink:#e6e8ee;--mute:#9aa3b2;--line:#2a3140}}
+:root[data-theme="dark"]{--bg:#0f1218;--card:#171c26;--ink:#e6e8ee;--mute:#9aa3b2;--line:#2a3140}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+aside{border-right:1px solid var(--line);padding:16px;background:var(--card);overflow:auto;max-height:100vh;position:sticky;top:0}
+aside h1{font-size:16px;margin:0 0 12px}
+aside button{display:block;width:100%;text-align:left;border:0;background:none;padding:7px 10px;border-radius:8px;color:var(--ink);cursor:pointer;font:inherit;font-size:14px}
+aside button:hover{background:var(--line)}
+aside button.on{background:var(--a);color:#fff}
+main{padding:24px;max-width:960px;width:100%}
+.group{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.07em}
+h2{margin:2px 0 14px;font-size:26px}
+.stage{background:var(--card);border:1px solid var(--line);border-radius:14px;min-height:340px;padding:24px 16px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:14px}
+.cap b{font-size:17px}
+.cap p{margin:6px 0 0;color:var(--ink)}
+.ctrl{display:flex;gap:8px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.ctrl button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit}
+.ctrl button.pri{background:var(--a);color:#fff;border-color:var(--a)}
+.ctrl button:disabled{opacity:.4;cursor:default}
+#count{color:var(--mute);font-size:14px;margin-left:6px}
+.dots{display:flex;gap:6px;margin-left:auto}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
+.dots i.on{background:var(--a)}
+
+/* animations */
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes drop{from{opacity:0;transform:translateY(-36px)}to{opacity:1;transform:none}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:none}}
+@keyframes growY{from{transform:scaleY(0)}to{transform:none}}
+@keyframes hl{0%{background:var(--y);color:#111}100%{background:var(--card);color:var(--ink)}}
+
+/* layout pieces */
+.row{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin:6px 0}
+.col{display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center}
+.drop{animation:drop .5s both;animation-delay:var(--d,0s)}
+.box{padding:10px 14px;border-radius:10px;color:#fff;background:var(--b);font-weight:600;text-align:center;min-width:80px;max-width:260px;font-size:14px;animation:pop .45s both;animation-delay:var(--d,0s)}
+.box small{display:block;font-weight:400;opacity:.9;font-size:12px;margin-top:2px}
+.ghost{background:transparent!important;color:var(--mute);border:2px dashed var(--line)}
+.box.dead{opacity:.3!important;filter:grayscale(1)}
+.arr{font-size:22px;color:var(--mute);animation:pop .45s both;animation-delay:var(--d,0s)}
+.note{color:var(--mute);font-size:13px;text-align:center;max-width:620px}
+.cell{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:8px;font-weight:600;animation:pop .4s both,hl .9s both;animation-delay:var(--d,0s)}
+.ptr{width:36px;font-size:11px;text-align:center;color:var(--mute);height:16px}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--b);margin:4px;animation:pop .4s both;animation-delay:var(--d,0s)}
+.chip{padding:4px 12px;border-radius:99px;background:var(--y);color:#111;font-weight:700;font-size:13px}
+.chart{display:flex;align-items:flex-end;gap:10px;height:170px;border-bottom:1px solid var(--line);padding:0 8px;width:100%;justify-content:center}
+.colbar{width:28px;background:var(--b);border-radius:6px 6px 0 0;transform-origin:bottom;animation:growY .6s both;animation-delay:var(--d,0s)}
+.colbar.c-r{background:var(--r)}
+.span{display:flex;align-items:center;gap:10px;margin:6px 0;width:100%;max-width:680px}
+.lbl{width:130px;font-size:13px;text-align:right;color:var(--mute);flex:none}
+.track{position:relative;flex:1;height:22px;background:var(--line);border-radius:6px}
+.bar{position:absolute;top:3px;height:16px;border-radius:5px;background:var(--b);transform-origin:left;animation:growX .8s both;animation-delay:var(--d,0s)}
+.log{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;animation:pop .4s both;animation-delay:var(--d,0s);text-align:left;width:100%;max-width:680px}
+.lv{display:inline-block;width:64px;font-weight:700}
+.lv.ERROR{color:var(--r)} .lv.INFO{color:var(--g)} .lv.WARN{color:var(--y)}
+.lab{width:52px;font-size:13px;color:var(--mute);text-align:right}
+table.iso{border-collapse:collapse;width:100%;max-width:720px;font-size:14px}
+table.iso th,table.iso td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+table.iso tr{animation:pop .4s both;animation-delay:var(--d,0s)}
+td.bad{color:var(--r);font-weight:600}
+td.good{color:var(--g);font-weight:600}
+pre.code{background:var(--bg);border:1px solid var(--line);padding:10px 12px;border-radius:8px;font-size:13px;text-align:left;max-width:100%;overflow:auto;margin:0}
+
+/* slower, easier-to-follow animations */
+.box,.arr,.cell,.dot,.drop,.colbar,.bar,.log,table.iso tr{animation-duration:1.4s!important}
+.more{margin:12px 0 0;padding-left:20px;font-size:14.5px}
+.more li{margin:6px 0}
+.ex{margin-top:14px}
+.exh{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--mute);margin:0 0 6px}
+.ex pre.code{font-size:12.5px;line-height:1.45;max-height:420px}
+
+/* colours (keep last so they win) */
+.c-b{background:var(--b)} .c-g{background:var(--g)} .c-r{background:var(--r)} .c-y{background:var(--y);color:#111}
+.c-p{background:var(--p)} .c-t{background:var(--t)} .c-m{background:var(--m)} .c-o{background:var(--o)}
+.dot.c-p{background:var(--p)}
+
+@media (max-width:760px){
+  .wrap{grid-template-columns:1fr}
+  aside{position:static;max-height:220px;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:16px}
+  .lbl{width:90px}
+  .dots{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside>
+    <h1>Backend concepts, animated</h1>
+    <div id="nav"></div>
+  </aside>
+  <main>
+    <div class="group" id="group"></div>
+    <h2 id="topic"></h2>
+    <div class="stage" id="stage"></div>
+    <div class="cap" id="cap"></div>
+    <div class="ctrl">
+      <button id="prev">← Prev</button>
+      <button id="play" class="pri">▶ Play</button>
+      <button id="next" class="pri">Next →</button>
+      <span id="count"></span>
+      <div class="dots" id="dots"></div>
+    </div>
+  </main>
+</div>
+
+<script src="details.js"></script>
+<script>
+/* ---------- tiny helpers for building the visuals ---------- */
+const B = (t, c = '', s = '', d = 0) => `<div class="box ${c}" style="--d:${d * .35}s">${t}${s ? `<small>${s}</small>` : ''}</div>`;
+const A = (d = 0) => `<div class="arr" style="--d:${d * .35}s">→</div>`;
+const Dn = (d = 0) => `<div class="arr" style="--d:${d * .35}s">↓</div>`;
+const R = (...x) => `<div class="row">${x.join('')}</div>`;
+const C = (...x) => `<div class="col">${x.join('')}</div>`;
+const N = t => `<div class="note">${t}</div>`;
+const cells = (arr, gap = .08) => arr.map((v, i) => `<div class="cell" style="--d:${i * gap}s">${v}</div>`).join('');
+
+/* ---------- lessons: one per topic line in the post, each with animated steps ---------- */
+const LESSONS = [
+{
+  title: 'JVM Internals', group: 'Heap · Stack · GC · ClassLoader',
+  steps: [
+    { t: 'From source to running code', x: 'javac compiles .java into .class bytecode. The ClassLoader finds and links classes. Each loader asks its parent first (parent delegation).',
+      draw: () => C(
+        R(B('Main.java', 'c-m', 'source'), A(0), B('javac', 'c-b', 'compile'), A(1), B('Main.class', 'c-m', 'bytecode'), A(2), B('ClassLoader', 'c-p', 'load & link'), A(3), B('JVM runs', 'c-g', 'interpret → JIT')),
+        R(B('Bootstrap', 'c-m', 'java.lang.*', 1), B('Platform', 'c-m', 'java.sql.*', 2), B('Application', 'c-p', 'your classes', 3)),
+        N('Delegation: Application asks Platform, Platform asks Bootstrap. Only if none finds it does the child load it.'))
+    },
+    { t: 'Runtime memory areas', x: 'Each thread has its own stack of frames (method calls and local variables). Objects live on the shared heap. Class metadata lives in Metaspace, outside the heap.',
+      draw: () => R(
+        C(N('Thread stack (per thread)'), B('main()', 'c-o', 'locals', 0), B('calc(x)', 'c-o', 'frame', 1), B('helper()', 'c-o', 'top frame', 2)),
+        C(N('Heap (shared by all threads)'), R(B('Eden', 'c-g', 'new objects'), B('S0 / S1', 'c-t', 'survivors'), B('Old Gen', 'c-m', 'long-lived'))),
+        C(N('Metaspace'), B('class metadata', 'c-p', 'methods, fields')))
+    },
+    { t: 'Garbage collection: mark and sweep', x: 'The GC starts at roots (static fields, live stack variables) and marks everything reachable. Unmarked objects are garbage and get swept. Anything you can still reach is never freed.',
+      draw: () => C(
+        R(B('GC root', 'c-y', 'static field', 0), A(0), B('a', 'c-g', 'reachable', 1), A(1), B('b', 'c-g', 'reachable', 2)),
+        N('after the references to these were dropped:'),
+        R(B('c', 'c-r dead', 'garbage', 3), B('d', 'c-r dead', 'garbage', 4)))
+    },
+    { t: 'Generational GC', x: 'Most objects die young, so the heap is split by age. New objects go to Eden, survivors move between S0 and S1, and long-lived ones are promoted to Old Gen. Minor GCs are frequent and cheap. Major GCs are rare and can pause the app.',
+      draw: () => R(B('new Order()', 'c-b', 'allocated', 0), A(0), B('Eden', 'c-g', 'minor GC: frequent, cheap', 1), A(1), B('S0 ↔ S1', 'c-t', 'copied each GC', 2), A(2), B('Old Gen', 'c-m', 'promoted after N GCs', 3), A(3), B('Major GC', 'c-r', 'rare, long pauses', 4))
+    }
+  ]
+},
+{
+  title: 'Multithreading', group: 'ExecutorService · CompletableFuture · Locks · Virtual Threads',
+  steps: [
+    { t: 'ExecutorService: a thread pool', x: 'Creating a thread per task is expensive. A fixed pool of workers pulls tasks from a queue and reuses its threads.',
+      draw: () => C(
+        N('Task queue'),
+        R(...[1, 2, 3, 4, 5].map((n, i) => B('task ' + n, 'c-p', '', i))),
+        Dn(),
+        N('Pool of 3 worker threads'),
+        R(B('worker-1', 'c-b', 'running task 1', 0), B('worker-2', 'c-b', 'running task 2', 1), B('worker-3', 'c-b', 'running task 3', 2)))
+    },
+    { t: 'CompletableFuture: async pipeline', x: 'Stages run when their inputs are ready, and nothing blocks in between. Independent calls run in parallel, and thenCombine merges them.',
+      draw: () => C(
+        R(B('getUser()', 'c-b', 'thread A', 0), B('getOrders()', 'c-b', 'thread B', 1)),
+        Dn(),
+        B('thenCombine', 'c-t', 'merge both results', 2),
+        Dn(),
+        B('join()', 'c-g', 'final result', 3))
+    },
+    { t: 'Locks: one at a time in the critical section', x: 'When threads share mutable state, guard it with synchronized or ReentrantLock. Only the lock holder runs the critical section; the rest wait. Without the lock you get race conditions and lost updates.',
+      draw: () => C(
+        R(B('Thread-1', 'c-g', 'holds lock → counter++', 0), B('Thread-2', 'c-m', 'waiting…', 1), B('Thread-3', 'c-m', 'waiting…', 2)),
+        Dn(),
+        B('🔒 shared counter', 'c-y', 'critical section', 3))
+    },
+    { t: 'Virtual threads (Java 21+)', x: 'Millions of cheap virtual threads run on a few OS carrier threads. When one blocks on I/O it unmounts, so the carrier thread keeps working.',
+      draw: () => C(
+        R(...Array.from({ length: 14 }, (_, i) => `<span class="dot c-p" style="--d:${i * .05}s"></span>`)),
+        Dn(),
+        R(B('carrier 1', 'c-b', 'OS thread', 0), B('carrier 2', 'c-b', 'OS thread', 1)),
+        N('14 virtual threads share 2 OS threads.'))
+    }
+  ]
+},
+{
+  title: 'Database Internals', group: 'Indexing · Transactions · Isolation · Query optimization',
+  steps: [
+    { t: 'Indexing: full scan vs B-tree', x: 'Without an index the database reads every row. A B-tree index walks a few levels and jumps straight to the matching row.',
+      draw: () => R(
+        C(N('Full table scan: 10 rows read'), R(cells(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], .12))),
+        C(N('B-tree index on id'), B('50', 'c-b', 'root', 0), R(B('20', 'c-b', '', 1), B('80', 'c-b', '', 1)), R(B('10', 'c-m', '', 2), B('35', 'c-g', 'found in 3 steps', 2), B('65', 'c-m', '', 2), B('90', 'c-m', '', 2))))
+    },
+    { t: 'Transactions: all or nothing', x: 'A transaction groups statements. COMMIT makes them permanent. If any step fails, ROLLBACK undoes the earlier ones. This is the Atomicity part of ACID.',
+      draw: () => C(
+        R(B('BEGIN', 'c-m', '', 0), A(0), B('debit A −30', 'c-p', '', 1), A(1), B('credit B +30', 'c-p', '', 2), A(2), B('COMMIT', 'c-g', 'durable', 3)),
+        N('If the credit fails instead:'),
+        R(B('BEGIN', 'c-m', '', 0), A(0), B('debit A −30', 'c-p', 'applied', 1), A(1), B('credit B ✗', 'c-r', 'error', 2), A(2), B('ROLLBACK', 'c-r', 'debit undone', 3)))
+    },
+    { t: 'Isolation levels: which anomalies are allowed?', x: 'Stronger isolation prevents more anomalies but costs more locking and throughput. PostgreSQL defaults to Read Committed. MySQL InnoDB defaults to Repeatable Read.',
+      draw: () => `<table class="iso"><tr><th>Level</th><th>Dirty read possible?</th><th>Non-repeatable read possible?</th><th>Phantom read possible?</th></tr>` +
+        [['Read Uncommitted', 'Yes', 'Yes', 'Yes'], ['Read Committed', 'No', 'Yes', 'Yes'], ['Repeatable Read', 'No', 'No', 'Yes'], ['Serializable', 'No', 'No', 'No']]
+          .map((r, i) => `<tr style="--d:${i * .2}s">` + r.map((c, j) => j === 0 ? `<td><b>${c}</b></td>` : `<td class="${c === 'Yes' ? 'bad' : 'good'}">${c}</td>`).join('') + `</tr>`).join('') + `</table>`
+    },
+    { t: 'Query optimization: read the plan', x: 'The optimizer picks a plan from table statistics. Check it with EXPLAIN. An index on the filter column turns a full scan into a targeted index lookup.',
+      draw: () => C(
+        N('SELECT * FROM orders WHERE customer_id = 42'),
+        R(C(B('Before: Seq Scan', 'c-r', 'reads ~1,000,000 rows', 0), N('cost ≈ 12,000')), A(1), C(B('After: Index Scan', 'c-g', 'reads ~3 rows', 2), N('cost ≈ 8'))),
+        N('Fix: CREATE INDEX idx_orders_customer ON orders(customer_id). Also select only the columns you need.'))
+    }
+  ]
+},
+{
+  title: 'Caching', group: 'Redis · Eviction · Distributed caching',
+  steps: [
+    { t: 'Cache-aside: check the cache first', x: 'The app asks Redis first. On a hit it returns at once. On a miss it reads the database, stores the result with a TTL, then returns it.',
+      draw: () => C(
+        N('Hit path'),
+        R(B('App', 'c-b', '', 0), A(0), B('Redis GET', 'c-y', 'user:42', 1), A(1), B('HIT ✓', 'c-g', '~1 ms', 2)),
+        N('Miss path'),
+        R(B('App', 'c-b', '', 0), A(0), B('Redis GET', 'c-y', 'MISS ✗', 1), A(1), B('Database', 'c-m', 'SELECT (~50 ms)', 2), A(2), B('Redis SET', 'c-y', 'user:42, TTL 10m', 3)))
+    },
+    { t: 'Eviction: LRU (least recently used)', x: 'The cache holds 3 entries. Reading A refreshes it. Inserting D then evicts B, because B was the least recently used.',
+      draw: () => C(
+        R(...['put A', 'put B', 'put C', 'get A', 'put D → evict'].map((o, i) => B(o, 'c-m', '', i))),
+        Dn(),
+        R(B('C', 'c-g', 'oldest now', 0), B('A', 'c-g', '', 1), B('D', 'c-g', 'newest', 2), B('B', 'c-r dead', 'evicted', 3)),
+        N('Other policies: LFU (least frequently used), FIFO, and TTL expiry.'))
+    },
+    { t: 'Distributed cache: shared by all app nodes', x: 'Redis runs as its own cluster. Every app instance reads and writes the same keys. Keys are spread over nodes by hash slot, so capacity grows horizontally.',
+      draw: () => C(
+        R(B('App 1', 'c-b', '', 0), B('App 2', 'c-b', '', 1), B('App 3', 'c-b', '', 2)),
+        Dn(),
+        N('hash(key) → slot → the node that owns it'),
+        R(B('Redis node A', 'c-y', 'slots 0–5460', 3), B('Redis node B', 'c-y', 'slots 5461–10922', 4), B('Redis node C', 'c-y', 'slots 10923–16383', 5)))
+    },
+    { t: 'Invalidation: the hard part', x: 'When data changes, delete or update the cache entry so readers do not see stale values. A TTL is the safety net for invalidations that get missed.',
+      draw: () => C(
+        R(B('UPDATE user 42', 'c-m', 'DB write', 0), A(0), B('DEL user:42', 'c-r', 'invalidate', 1), A(1), B('next GET misses', 'c-g', 'reloads fresh row', 2)),
+        N('Stale = an old value served from cache. Use TTLs (e.g. 10 min) so even a missed invalidation heals itself.'))
+    }
+  ]
+},
+{
+  title: 'Messaging (Kafka)', group: 'Topics · Partitions · Consumer groups · Event-driven',
+  steps: [
+    { t: 'Topics and partitions', x: 'A topic is split into partitions. Each partition is an append-only log with offsets. The same key always goes to the same partition, so order is kept per key.',
+      draw: () => C(
+        R(B('Producer', 'c-m', 'key = userId', 0), A(0), B('Topic: orders', 'c-b', '3 partitions', 1)),
+        Dn(),
+        R(...[0, 1, 2].map(p => C(N('Partition ' + p), R(...[0, 1, 2, 3].map(o => `<div class="cell" style="--d:${(p * 4 + o) * .05}s">${o}</div>`))))))
+    },
+    { t: 'Consumer groups: split the work', x: 'Consumers in one group share the partitions, and each partition goes to exactly one consumer in that group. A fourth consumer would sit idle. A second group reads the same data independently.',
+      draw: () => C(
+        R(C(B('P0', 'c-m', '', 0), B('P1', 'c-m', '', 1), B('P2', 'c-m', '', 2)), A(1), C(N('Group: billing'), B('C1', 'c-g', '', 3), B('C2', 'c-g', '', 4), B('C3', 'c-g', '', 5), B('C4', 'ghost', 'idle', 6))),
+        N('Want a second, independent reader? Start a new group, such as "analytics".'))
+    },
+    { t: 'Event-driven: publish once, many react', x: 'The order service publishes OrderPlaced and does not know who listens. Inventory, email and analytics each subscribe on their own. Adding a new listener needs no change in the producer.',
+      draw: () => C(
+        B('OrderPlaced event', 'c-y', '{ orderId: 42 }', 0),
+        Dn(1),
+        R(B('Inventory', 'c-b', 'reserve stock', 2), B('Email', 'c-b', 'send receipt', 3), B('Analytics', 'c-b', 'update dashboard', 4)))
+    },
+    { t: 'Offsets: where am I in the log?', x: 'Each consumer group stores its committed offset. After a crash it resumes from there. To replay old data, reset the offset to 0.',
+      draw: () => C(
+        R(...[0, 1, 2, 3, 4, 5, 6].map(i => `<div class="cell" style="--d:${i * .08}s">${i}</div>`)),
+        R(...[0, 1, 2, 3, 4, 5, 6].map(i => `<div class="ptr">${i === 4 ? '▲ A' : i === 6 ? 'latest' : ''}</div>`)),
+        N('Group A committed offset = 4, so it resumes at offset 4 after a restart.'),
+        B('Group B (new): offset 0, replays everything', 'c-p', '', 2))
+    }
+  ]
+},
+{
+  title: 'Microservices', group: 'API Gateway · Service discovery · Resilience · Sagas',
+  steps: [
+    { t: 'API Gateway: one entry point', x: 'Clients call a single URL. The gateway handles auth, rate limiting and routing, so the services themselves stay private.',
+      draw: () => R(B('Mobile / Web', 'c-m', '', 0), A(0), B('API Gateway', 'c-p', 'auth · rate limit · route', 1), A(1),
+        C(B('User service', 'c-b', '/users/**', 2), B('Order service', 'c-b', '/orders/**', 3), B('Payment service', 'c-b', '/payments/**', 4)))
+    },
+    { t: 'Service discovery: find instances by name', x: 'Instances register themselves with a registry such as Eureka, Consul or Kubernetes DNS. Callers look up a healthy instance by service name instead of hard-coded IPs.',
+      draw: () => C(
+        R(B('order-svc #1', 'c-g', 'registers 10.0.0.5', 0), B('order-svc #2', 'c-g', 'registers 10.0.0.6', 1)),
+        Dn(),
+        B('Service registry', 'c-y', 'order-svc → [10.0.0.5, 10.0.0.6]', 2),
+        Dn(),
+        B('Gateway', 'c-p', 'picks one (load balanced)', 3))
+    },
+    { t: 'Resilience: the circuit breaker', x: 'After enough failures the breaker opens and calls fail fast instead of piling up. After a cool-down it lets one trial call through (half-open). Combine it with timeouts and retries with backoff.',
+      draw: () => R(B('CLOSED', 'c-g', 'calls flow, failures counted', 0), A(0), B('OPEN', 'c-r', 'fail fast after 5 errors', 1), A(1), B('HALF-OPEN', 'c-y', 'one trial call', 2), A(2), B('CLOSED', 'c-g', 'trial succeeded', 3))
+    },
+    { t: 'Distributed transactions: the Saga', x: 'There is no global commit across services. Each step is a local transaction. If a later step fails, run the compensating actions in reverse order.',
+      draw: () => C(
+        R(B('1. Reserve stock', 'c-g', '✓', 0), A(0), B('2. Charge card', 'c-g', '✓', 1), A(1), B('3. Ship order', 'c-r', '✗ failed', 2)),
+        N('Compensate in reverse:'),
+        R(B('Undo 2: refund', 'c-y', '', 3), A(3), B('Undo 1: release stock', 'c-y', '', 4)))
+    }
+  ]
+},
+{
+  title: 'Security', group: 'Spring Security · JWT · OAuth2 · AuthN vs AuthZ',
+  steps: [
+    { t: 'Authentication vs authorization', x: 'Authentication answers "who are you?" (password, OTP, SSO). Authorization answers "what may you do?" (roles, permissions). Authenticate first, then authorize.',
+      draw: () => R(
+        C(B('Authentication', 'c-b', 'Who are you?', 0), N('password · OTP · SSO')),
+        A(1),
+        C(B('Authorization', 'c-p', 'What can you do?', 2), N('role = ADMIN → may delete users')))
+    },
+    { t: 'JWT: a signed token', x: 'A JWT has three base64url parts: header.payload.signature. The server signs it with a secret. Anyone can read the payload, but only the server can produce a valid signature. Never put secrets in the payload.',
+      draw: () => C(
+        R(B('eyJhbGciOiJIUzI1NiJ9', 'c-b', 'header: alg, typ', 0), B('eyJzdWIiOiJhbWFuIn0', 'c-p', 'payload: sub, roles, exp', 1), B('SflKxwRJSMeKKF2Q', 'c-g', 'signature', 2)),
+        R(B('Client', 'c-m', '', 3), A(3), B('POST /login', 'c-y', 'server signs with secret', 4), A(4), B('Bearer token', 'c-b', 'sent on every call', 5), A(5), B('Verify signature', 'c-g', 'then trust claims', 6)))
+    },
+    { t: 'OAuth2: authorization code flow', x: 'The app never sees the user\'s password. It redirects the user to the auth server, receives a one-time code, exchanges that code for an access token, and calls the API with the token.',
+      draw: () => C(
+        R(B('1. User clicks Login', 'c-m', '', 0), A(0), B('2. Redirect to auth server', 'c-y', 'login + consent', 1)),
+        Dn(2),
+        R(B('3. Code returned', 'c-y', 'one-time', 3), A(3), B('4. App exchanges code', 'c-b', 'client_id + secret', 4), A(4), B('5. Access token', 'c-g', 'call the API with it', 5)),
+        Dn(5),
+        B('Resource server', 'c-p', 'validates token, returns data', 6))
+    },
+    { t: 'Spring Security: the filter chain', x: 'Each request passes through a chain of filters before it reaches your controller. If a check fails, the response is 401 or 403 and the controller never runs.',
+      draw: () => C(
+        R(B('HTTP request', 'c-m', '', 0), A(0), B('JwtAuthFilter', 'c-b', 'parse and validate token', 1), A(1), B('Authorization', 'c-y', '@PreAuthorize("hasRole")', 2), A(2), B('@RestController', 'c-g', 'runs', 3)),
+        N('Rejected at any filter → 401 / 403, and the controller is never called.'))
+    }
+  ]
+},
+{
+  title: 'System Design', group: 'Scalability · Load balancing · Rate limiting · Sharding',
+  steps: [
+    { t: 'Scaling: vertical vs horizontal', x: 'Vertical scaling adds CPU and RAM to one box. It is simple, but it has a ceiling and is a single point of failure. Horizontal scaling adds more boxes, which needs a load balancer and stateless services.',
+      draw: () => R(
+        C(B('1 big server', 'c-r', '16 vCPU · 64 GB', 0), N('vertical: bigger box, with a ceiling')),
+        A(1),
+        C(R(B('small', 'c-g', '', 2), B('small', 'c-g', '', 3), B('small', 'c-g', '', 4), B('small', 'c-g', '', 5)), N('horizontal: more boxes behind a load balancer')))
+    },
+    { t: 'Load balancing: round robin', x: 'A load balancer spreads requests over healthy servers. Round robin takes them in turn. Other strategies include least connections, IP hash and weighted.',
+      draw: () => C(
+        B('Load balancer', 'c-p', 'round robin', 0),
+        R(...[1, 2, 3, 4, 5, 6].map((n, i) => `<div class="col drop" style="--d:${i * .35 + .3}s"><div class="chip">R${n}</div>${Dn()}${B('S' + (i % 3 + 1), 'c-b')}</div>`)))
+    },
+    { t: 'Rate limiting: token bucket', x: 'Each client gets a bucket of 5 tokens, refilled at 1 per second. Each request takes one token. When the bucket is empty the server returns HTTP 429 Too Many Requests.',
+      draw: () => C(
+        N('6 requests in one second, bucket holds 5 tokens'),
+        R(B('req 1', 'c-g', '200 OK', 0), B('req 2', 'c-g', '200 OK', 1), B('req 3', 'c-g', '200 OK', 2), B('req 4', 'c-g', '200 OK', 3), B('req 5', 'c-g', '200 OK', 4), B('req 6', 'c-r', '429 Too Many', 5)),
+        N('Tokens refill slowly, so the next request after a refill succeeds.'))
+    },
+    { t: 'Sharding: split the rows by key', x: 'Each shard holds a slice of the rows. shard = hash(user_id) % 4 finds the right one. The costs are cross-shard queries and rebalancing when you add shards.',
+      draw: () => C(
+        B('user_id = 42', 'c-m', 'hash(42) % 4 = 2', 0),
+        Dn(1),
+        R(...[[4, 8, 12], [1, 5, 9], [2, 42, 10], [3, 7, 11]].map((ids, s) => B('Shard ' + s, s === 2 ? 'c-g' : 'c-m', 'ids: ' + ids.join(', '), s + 2))),
+        N('Only shard 2 is queried. The other shards are untouched.'))
+    }
+  ]
+},
+{
+  title: 'DevOps', group: 'Docker · Kubernetes · CI/CD · Jenkins',
+  steps: [
+    { t: 'Docker: image → container', x: 'A Dockerfile describes how to build an image. The image is immutable and made of layers. A container is a running instance of an image. The same image runs in dev, CI and prod.',
+      draw: () => R(B('Dockerfile', 'c-m', 'FROM eclipse-temurin:21 · COPY app.jar', 0), A(0), B('Image', 'c-b', 'immutable layers', 1), A(1), B('Containers ×3', 'c-g', 'running instances', 2))
+    },
+    { t: 'Kubernetes: desired state', x: 'You declare "3 replicas" and the controller keeps reality matching that. When a pod dies it is replaced automatically. Services route traffic only to ready pods.',
+      draw: () => C(
+        R(B('Pod 1', 'c-g', 'ready', 0), B('Pod 2', 'c-r dead', 'crashed', 1), B('Pod 3', 'c-g', 'ready', 2)),
+        Dn(3),
+        N('Controller sees 2 of 3 running, so it creates a replacement.'),
+        R(B('Pod 1', 'c-g', '', 4), B('Pod 3', 'c-g', '', 5), B('Pod 4', 'c-g', 'new replacement', 6)))
+    },
+    { t: 'CI/CD pipeline', x: 'Every commit runs build, test, package and deploy. A failing stage stops the pipeline, so broken code never reaches production. Production can require manual approval. Jenkins, GitHub Actions and GitLab CI all work this way.',
+      draw: () => R(B('Commit', 'c-m', 'git push', 0), A(0), B('Build', 'c-g', 'mvn package', 1), A(1), B('Test', 'c-g', 'unit + integration', 2), A(2), B('Docker image', 'c-g', 'push to registry', 3), A(3), B('Deploy staging', 'c-y', 'automatic', 4), A(4), B('Production', 'c-p', 'manual approval', 5))
+    },
+    { t: 'Rolling deployment', x: 'Pods are replaced gradually: first some v1, then a mix, then all v2. Users keep getting responses during the rollout, and you roll back by reversing the process.',
+      draw: () => {
+        const row = (lab, vs) => `<div class="row"><div class="lab">${lab}</div>${vs.map((v, i) => B(v, v === 'v2' ? 'c-g' : 'c-m', '', i)).join('')}</div>`;
+        return C(row('t0', ['v1', 'v1', 'v1']), row('t1', ['v2', 'v1', 'v1']), row('t2', ['v2', 'v2', 'v1']), row('t3', ['v2', 'v2', 'v2']));
+      }
+    }
+  ]
+},
+{
+  title: 'Cloud (AWS / Azure)', group: 'EC2 · S3 · Load balancers · Auto scaling',
+  steps: [
+    { t: 'Load balancer across zones', x: 'A managed load balancer sits in front of instances spread over Availability Zones. If one zone fails, traffic goes to the others.',
+      draw: () => C(
+        B('Users', 'c-m', '', 0), Dn(1),
+        B('Load balancer', 'c-p', 'ALB (AWS) / Load Balancer (Azure)', 2), Dn(3),
+        R(C(N('AZ-a'), B('EC2 / VM', 'c-b', '', 4)), C(N('AZ-b'), B('EC2 / VM', 'c-b', '', 5))))
+    },
+    { t: 'Object storage: S3 / Blob Storage', x: 'Files are stored as objects in a bucket under a key. Storage is effectively unlimited, durable and cheap. There are no real folders, only key prefixes.',
+      draw: () => R(B('upload logo.png', 'c-m', '', 0), A(0), B('Bucket: my-app-assets', 'c-g', 'key: images/logo.png', 1), A(1), B('Replicated across zones', 'c-b', 'very high durability', 2))
+    },
+    { t: 'Auto scaling', x: 'A scaling policy watches a metric, here CPU. Above the target it adds instances, and when load drops it removes them. You pay for what you use.',
+      draw: () => C(
+        N('Before: CPU 85% (target 70%)'),
+        R(B('EC2 1', 'c-r', '', 0), B('EC2 2', 'c-r', '', 1)),
+        Dn(2),
+        N('Scale out: +2 instances'),
+        R(B('EC2 1', 'c-g', '', 3), B('EC2 2', 'c-g', '', 4), B('EC2 3', 'c-b', 'new', 5), B('EC2 4', 'c-b', 'new', 6)))
+    },
+    { t: 'AWS ↔ Azure service map', x: 'The same building blocks exist on both clouds. Learn the concept once, and the names change.',
+      draw: () => `<table class="iso"><tr><th>Need</th><th>AWS</th><th>Azure</th></tr>` +
+        [['Virtual machines', 'EC2', 'Virtual Machines'], ['Object storage', 'S3', 'Blob Storage'], ['Load balancer', 'ELB / ALB', 'Load Balancer / App Gateway'], ['Serverless functions', 'Lambda', 'Functions'], ['Managed Kubernetes', 'EKS', 'AKS'], ['Managed SQL', 'RDS', 'Azure SQL Database'], ['Messaging', 'SQS / SNS / MSK', 'Service Bus / Event Hubs']]
+          .map((r, i) => `<tr style="--d:${i * .15}s">` + r.map(c => `<td>${c}</td>`).join('') + `</tr>`).join('') + `</table>`
+    }
+  ]
+},
+{
+  title: 'Observability', group: 'Logs · Metrics · Distributed tracing · Grafana',
+  steps: [
+    { t: 'The three pillars', x: 'Logs say what happened. Metrics say how much and how fast, as numbers over time. Traces say where the time went across services. You need all three to debug production.',
+      draw: () => R(
+        C(B('Logs', 'c-b', 'what happened', 0), N('"order 42 failed: timeout"')),
+        C(B('Metrics', 'c-g', 'how much / how fast', 1), N('requests per second, p99 latency')),
+        C(B('Traces', 'c-p', 'where the time went', 2), N('spans across services')))
+    },
+    { t: 'Distributed tracing', x: 'Each request gets a trace ID that is passed to every downstream call. Each service records spans with start and end times. A long bar shows a slow hop.',
+      draw: () => {
+        const spans = [['API Gateway', 0, 100, 'c-p'], ['Order service', 5, 90, 'c-b'], ['Payment service', 20, 70, 'c-g'], ['Database', 25, 60, 'c-y']];
+        return C(N('trace 9f2c · total 480 ms'), ...spans.map(([n, l, w, c], i) =>
+          `<div class="span"><div class="lbl">${n}</div><div class="track"><div class="bar ${c}" style="left:${l}%;width:${w - l}%;--d:${i * .25}s"></div></div></div>`));
+      }
+    },
+    { t: 'Metrics → dashboard (Grafana)', x: 'Metrics are stored as time series and drawn as graphs. Alerts fire on thresholds, for example p99 latency above 500 ms for 5 minutes.',
+      draw: () => C(
+        `<div class="chart">${[40, 45, 42, 50, 48, 140, 52, 46].map((h, i) => `<div class="colbar ${i === 5 ? 'c-r' : ''}" style="height:${h}px;--d:${i * .1}s"></div>`).join('')}</div>`,
+        N('Red bar = latency spike → alert fires'))
+    },
+    { t: 'Structured logs with a trace ID', x: 'Log JSON with the trace ID and level. Then you can filter every line for one request across all services in seconds.',
+      draw: () => C(...[['INFO', 'gateway', 'POST /orders received'], ['INFO', 'order', 'order created'], ['ERROR', 'payment', 'card declined'], ['WARN', 'order', 'retrying rollback']]
+        .map(([lv, svc, msg], i) => `<div class="log" style="--d:${i * .3}s"><span class="lv ${lv}">${lv}</span> <b>${svc}</b> ${msg} <i>traceId=9f2c</i></div>`))
+    }
+  ]
+},
+{
+  title: 'Testing', group: 'JUnit · Mockito · Integration testing · Testcontainers',
+  steps: [
+    { t: 'The test pyramid', x: 'Many fast unit tests at the bottom, fewer integration tests in the middle, and only a few slow end-to-end tests at the top. Cost and flakiness grow as you go up.',
+      draw: () => C(
+        `<div class="box c-r" style="width:220px">E2E / UI · few, slow</div>`,
+        `<div class="box c-y" style="width:340px">Integration · Testcontainers</div>`,
+        `<div class="box c-g" style="width:460px">Unit · many, fast · JUnit + Mockito</div>`)
+    },
+    { t: 'JUnit 5 lifecycle', x: 'JUnit runs the hooks in order around every test method. Each test gets setup and teardown, so tests stay independent of each other.',
+      draw: () => R(B('@BeforeAll', 'c-m', 'once per class', 0), A(0), B('@BeforeEach', 'c-b', 'fresh setup', 1), A(1), B('@Test A', 'c-g', 'assertions', 2), A(2), B('@AfterEach', 'c-b', 'cleanup', 3),
+        A(3), B('@BeforeEach', 'c-b', 'again', 4), A(4), B('@Test B', 'c-g', 'assertions', 5), A(5), B('@AfterEach', 'c-b', 'cleanup', 6), A(6), B('@AfterAll', 'c-m', 'once', 7))
+    },
+    { t: 'Mockito: fake the collaborator', x: 'Replace a dependency such as a payment gateway or HTTP client with a mock. Stub what it returns, run the real code, then verify the interaction happened.',
+      draw: () => R(B('OrderService (real)', 'c-g', 'code under test', 0), A(0), B('PaymentGateway (mock)', 'c-y', 'when(charge).thenReturn(OK)', 1), A(1), B('verify(gateway).charge()', 'c-p', 'interaction checked', 2))
+    },
+    { t: 'Testcontainers: a real database in a test', x: 'Testcontainers starts a throwaway Docker container, such as Postgres, for the test run and removes it afterwards. You test against the real engine, not an in-memory stand-in.',
+      draw: () => C(
+        R(B('JUnit test', 'c-m', '', 0), A(0), B('Testcontainers', 'c-b', 'starts Docker', 1), A(1), B('Postgres 16', 'c-g', 'random port', 2), A(2), B('stopped', 'c-r dead', 'after the test', 3)),
+        `<pre class="code">@Container
+static PostgreSQLContainer&lt;?&gt; db = new PostgreSQLContainer&lt;&gt;("postgres:16");</pre>`)
+    }
+  ]
+}
+];
+
+/* ---------- flat step list and navigation ---------- */
+const FLAT = [];
+LESSONS.forEach((l, li) => l.steps.forEach((s, si) => FLAT.push({ li, si, l, s })));
+let k = 0, timer = null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+function render() {
+  const cur = FLAT[k];
+  $('group').textContent = cur.l.group + '  ·  Topic ' + (cur.li + 1) + ' of ' + LESSONS.length;
+  $('topic').textContent = cur.l.title;
+  $('stage').innerHTML = cur.s.draw();
+  const ex = ('ex' in cur.s) ? cur.s.ex : ((typeof EXAMPLES !== 'undefined' && EXAMPLES[k]) ? EXAMPLES[k] : '');
+  $('cap').innerHTML = '<b>' + cur.s.t + '</b><p>' + cur.s.x + '</p>' +
+    '<ul class="more">' + (('more' in cur.s ? cur.s.more : DETAILS[k]) || []).map(x => '<li>' + x + '</li>').join('') + '</ul>' +
+    (ex ? '<div class="ex"><div class="exh">Example</div><pre class="code">' + esc(ex) + '</pre></div>' : '') +
+    (cur.s.src ? '<div class="note" style="text-align:left;margin-top:10px">Source: ' + esc(cur.s.src) + '</div>' : '');
+  $('count').textContent = 'Step ' + (cur.si + 1) + ' / ' + cur.l.steps.length;
+  $('dots').innerHTML = cur.l.steps.map((_, i) => '<i class="' + (i === cur.si ? 'on' : '') + '"></i>').join('');
+  $('nav').innerHTML = LESSONS.map((l, i) => '<button class="' + (i === cur.li ? 'on' : '') + '" data-li="' + i + '">' + (i + 1) + '. ' + l.title + '</button>').join('');
+  $('prev').disabled = k === 0;
+  $('next').disabled = k === FLAT.length - 1;
+}
+
+function toggle() {
+  if (timer) { clearInterval(timer); timer = null; $('play').textContent = '▶ Play'; return; }
+  $('play').textContent = '❚❚ Pause';
+  timer = setInterval(() => { if (k < FLAT.length - 1) { k++; render(); } else toggle(); }, 9000);
+}
+
+$('next').onclick = () => { if (k < FLAT.length - 1) { k++; render(); } };
+$('prev').onclick = () => { if (k > 0) { k--; render(); } };
+$('play').onclick = toggle;
+$('nav').onclick = e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  k = FLAT.findIndex(f => f.li === Number(b.dataset.li));
+  render();
+};
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') $('next').click();
+  else if (e.key === 'ArrowLeft') $('prev').click();
+  else if (e.key === ' ' && e.target === document.body) { e.preventDefault(); toggle(); }
+});
+render();
+</script>
+<script src="shrayansh.js"></script>
+<script src="rajat.js"></script>
+<script src="extras.js"></script>
+</body>
+</html>
